@@ -1,87 +1,42 @@
-# Project Title
+# Translation code for form input fields using Google API
 
-One Paragraph of project description goes here
+You can use this code for translating form input field translation or for string translation in any language
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Create Google API with Cloud translation API Enable.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+You need billing account in google console to get API. Its paid and cost you 30$. First time login will get 300 $ credit in your account
 
-```
-Give examples
-```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Run API in curl to translate string or form values.
 
 ```
-Give the example
+$text = 'YOUR STRINg OR FORM VALUE'
+ $apiKey = 'YOUR API KEY';
+    $url = 'https://www.googleapis.com/language/translate/v2?key=' . $apiKey . '' . $text . '&source=en&target=ko';
+   
+    $handle = curl_init($url);
+    curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($handle);
+    $responseDecoded = json_decode($response, true);
+
+    curl_close($handle);
+ 
+    return $responseDecoded['data']['translations'];
 ```
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+in $url '&source=en&target=ko' these are the language in which language are we getting string and where we are going to translate. For example i am translating English to Korean.
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+I have tested this code with Contact form 7 plugin. Code getting Input data from contact form 7  and then translating it into korean before mail.
 
-### Break down into end to end tests
 
-Explain what these tests test and why
 
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
